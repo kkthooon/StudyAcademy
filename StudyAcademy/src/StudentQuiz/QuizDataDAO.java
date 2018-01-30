@@ -37,6 +37,7 @@ public class QuizDataDAO extends ArrayList<QuestionDTO> {
 			/*
 			 * for (Question q: QuizData) { System.out.println(q); }
 			 */
+			
 
 		} catch (FileNotFoundException e) {
 			System.out.println("¿¹¿Ü : " + e);
@@ -47,4 +48,4 @@ public class QuizDataDAO extends ArrayList<QuestionDTO> {
 	}// loadQuiz()
 
 }
-
+//\n
