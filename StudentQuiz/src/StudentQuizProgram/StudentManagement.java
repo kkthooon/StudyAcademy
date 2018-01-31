@@ -9,13 +9,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class StudentManagement {
 	Scanner scan = new Scanner(System.in);
 	ArrayList<Student> list = new ArrayList<Student>();
-	File inFile = new File("C:\\Users\\green201-11\\eclipse-workspace\\StudentQuiz", "management.txt");
-    File outFile = new File("C:\\Users\\green201-11\\eclipse-workspace\\StudentQuiz", "management.txt");
+	File inFile = new File("C:\\Users\\green201-11\\eclipse-workspace\\StudentQuiz", "Management.txt");
+    File outFile = new File("C:\\Users\\green201-11\\eclipse-workspace\\StudentQuiz", "Management.txt");
 	
+    public StudentManagement() {
+    	
+    }
+    
 	public void MenuPrint() {
 		System.out.println("=== 퀴즈 프로그램 ===");
 		System.out.println("   1. 회원가입");
@@ -26,7 +31,7 @@ public class StudentManagement {
 		FirstSelect();
 	}
 
-	public void StudentAdd() {        
+	public void StudentAdd() {
         BufferedWriter bw = null;
         
         try {
@@ -34,15 +39,15 @@ public class StudentManagement {
         	
         	System.out.print("이름: ");
         	String name = scan.next();
-        	bw.write(name + "/");
-        	
+        	bw.write(name + " ");
+
         	System.out.print("나이: ");
         	int age = scan.nextInt();
-        	bw.write(age + "/");
+        	bw.write(age + " ");
         	
         	System.out.print("폰번호: ");
     		String phoneNum = scan.next();
-    		bw.write(phoneNum + "/");
+    		bw.write(phoneNum + " ");
         	
     		System.out.print("패스워드: ");
     		String password = scan.next();
@@ -63,14 +68,38 @@ public class StudentManagement {
 	}
 	
 	public void Login() {
-
+		BufferedReader br = null;
+		
 		System.out.print("이름: ");
 		String name = scan.next();
 		
 		System.out.print("패스워드: ");
 		String password = scan.next();
-
-		for(int i = 0; i < list.size(); i++) {
+		
+		try {
+            br = new BufferedReader(new FileReader(inFile));
+            String line;
+            
+            while ((line = br.readLine()) != null) {
+            	StringTokenizer strToken  = new StringTokenizer(line," ");
+            	ArrayList<String> tokenArray = new ArrayList();
+            	while (strToken.hasMoreTokens()){
+            		tokenArray.add(strToken.nextToken());
+            		
+            	 }
+            	String name = tokenArray.get(0);
+            	Student student = new Student(tokenArray.get(0));
+        		list.add(student);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(br != null) try {br.close(); } catch (IOException e) {}
+        }
+        
+		/*for(int i = 0; i < list.size(); i++) {
 			if(list.get(i).getName().equals(name) && list.get(i).getPassword().equals(password)) {
 				System.out.println(list.get(i).getName() + " 님 로그인 성공!");
 				new Play().showMenu();
@@ -79,7 +108,7 @@ public class StudentManagement {
 				Login();
 				break;
 			}
-		}
+		}*/
 	}
 
 	public void FirstSelect() {
