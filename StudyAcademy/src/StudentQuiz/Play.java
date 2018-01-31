@@ -1,8 +1,11 @@
 package StudentQuiz;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 public class Play {
 
 	private int result = 0; //맞은개수 저장.
@@ -93,19 +96,47 @@ public class Play {
 		System.out.println("#퀴즈를 다 풀었습니다.");
 		
 		quizData.clear(); //퀴즈데이터 초기화
-//		showResult(); //결과 출력
+		showResult(); //결과 출력
 		
 	}//startQuiz()---------
 
 	/**게임 결과 보기*/
-//	public void showResult(){
-//
-//		System.out.println("===== Mini Quiz Result====");
-//		System.out.println("종  목 : "+menuString);
-//		System.out.println("문제수 : "+qTotalOuput);
-//		System.out.println("정답수 : "+result);
-//		System.out.printf("점  수 : %.1f 점\n",result*(100.0/qTotalOuput));
-//		System.out.println("==========================");
-//	}//showResult()---------
+	public void showResult(){
+		
+	        File outFile = new File("C:\\Users\\201-08\\eclipse-workspace\\Test", "Result.txt");
+	       
+	        //==========================//
+	        // 텍스트 파일 쓰기
+	        //==========================//
+	        BufferedWriter bw = null;
+	        try {
+	            bw = new BufferedWriter(new FileWriter(outFile));
+	            bw.write("===== Mini Quiz Result====");
+	            bw.newLine();
+	            bw.write("종  목 : "+menuString);
+	            bw.newLine();
+	            bw.write("문제수 : "+qTotalOuput);
+	            bw.newLine();
+	            bw.write("정답수 : "+result);
+	            bw.newLine();
+	            bw.write("점  수 : "+result*(100.0/qTotalOuput));
+	            bw.newLine();
+	            bw.write("==========================");
+	            bw.newLine();        
+	            bw.flush();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }finally {
+	            if(bw != null) try {bw.close(); } catch (IOException e) {}
+	        }
+
+		System.out.println("===== Mini Quiz Result====");
+		System.out.println("종  목 : "+menuString);
+		System.out.println("문제수 : "+qTotalOuput);
+		System.out.println("정답수 : "+result);
+		System.out.printf("점  수 : %.1f 점\n",result*(100.0/qTotalOuput));
+		System.out.println("==========================");
+	}//showResult()---------
+	
 }
 
