@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Play {
@@ -12,6 +13,7 @@ public class Play {
 	private String menuString; //메뉴항목
 	private int qTotalOuput; //출력 퀴즈수
 	private QuizDataDAO quizData; //문제들을 저장하는 ArrayList
+	private ArrayList<QuizResult> resultArray = new ArrayList<>();
 
 	//생성자
 	public Play() {
@@ -102,33 +104,42 @@ public class Play {
 
 	/**게임 결과 보기*/
 	public void showResult(){
+		File outFile = new File("C:\\Users\\201-08\\eclipse-workspace\\Test", "Result.txt");
+		//==========================//
+		// 텍스트 파일 쓰기
+		//==========================//
+		BufferedWriter bw = null;
 		
-	        File outFile = new File("C:\\Users\\201-08\\eclipse-workspace\\Test", "Result.txt");
-	       
-	        //==========================//
-	        // 텍스트 파일 쓰기
-	        //==========================//
-	        BufferedWriter bw = null;
-	        try {
-	            bw = new BufferedWriter(new FileWriter(outFile));
-	            bw.write("===== Mini Quiz Result====");
-	            bw.newLine();
-	            bw.write("종  목 : "+menuString);
-	            bw.newLine();
-	            bw.write("문제수 : "+qTotalOuput);
-	            bw.newLine();
-	            bw.write("정답수 : "+result);
-	            bw.newLine();
-	            bw.write("점  수 : "+result*(100.0/qTotalOuput));
-	            bw.newLine();
-	            bw.write("==========================");
-	            bw.newLine();        
-	            bw.flush();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }finally {
-	            if(bw != null) try {bw.close(); } catch (IOException e) {}
-	        }
+		double score = result*(100.0/qTotalOuput);
+		
+		QuizResult quizResult = new QuizResult();
+		quizResult.menuString = menuString;
+		quizResult.qTotalOuput = qTotalOuput;
+		quizResult.result = result;
+		quizResult.score = score;
+		
+		resultArray.add(quizResult);
+		
+		try {
+			bw = new BufferedWriter(new FileWriter(outFile));
+			bw.write("===== Mini Quiz Result====");
+			bw.newLine();
+			bw.write("종  목 : "+menuString);
+			bw.newLine();
+			bw.write("문제수 : "+qTotalOuput);
+			bw.newLine();
+			bw.write("정답수 : "+result);
+			bw.newLine();
+			bw.write("점  수 : "+score);
+			bw.newLine();
+			bw.write("==========================");
+			bw.newLine();
+			bw.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(bw != null) try {bw.close(); } catch (IOException e) {}
+		}
 
 		System.out.println("===== Mini Quiz Result====");
 		System.out.println("종  목 : "+menuString);
