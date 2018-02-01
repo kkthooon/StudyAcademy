@@ -6,6 +6,13 @@ public class Student {
 	private String phoneNum; //폰번호
 	private String password; //패스워드
 	
+	public Student() {
+
+	}
+	public Student(String idName, String isPassword) {
+		this.name = idName;
+		this.password = isPassword;
+	}
 	public Student(String name, int age, String phoneNum, String password) {
 		this.name = name;
 		this.age = age;

@@ -8,6 +8,14 @@ import java.util.Scanner;
 
 //문제들을 저장하는 저장공간 ArrayList
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+//문제들을 저장하는 저장공간 ArrayList
+
 public class QuizDataDAO extends ArrayList<QuestionDTO> {
 
 	/**
@@ -31,11 +39,13 @@ public class QuizDataDAO extends ArrayList<QuestionDTO> {
 				//System.out.println(qDTO);
 				this.add(qDTO);
 			}//while------
+    
 			System.out.println();
 			Collections.shuffle(this); // 문제 섞는다.
 			/*
 			 * for (Question q: QuizData) { System.out.println(q); }
 			 */
+			
 
 		} catch (FileNotFoundException e) {
 			System.out.println("예외 : " + e);
